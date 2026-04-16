@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+
 const BRAND_COLOR = "#5a1f2c"
 
 const menuItems = [
@@ -91,6 +93,16 @@ const styles = {
   navLink: {
     color: "#111",
     textDecoration: "none",
+    paddingBottom: "4px",
+    borderBottom: "2px solid transparent",
+    transition: "color 0.2s ease, border-color 0.2s ease",
+  },
+  navLinkActive: {
+    color: BRAND_COLOR,
+    textDecoration: "none",
+    paddingBottom: "4px",
+    borderBottom: `2px solid ${BRAND_COLOR}`,
+    transition: "color 0.2s ease, border-color 0.2s ease",
   },
   heroSection: {
     padding: "96px 40px 88px",
@@ -198,17 +210,52 @@ const styles = {
 }
 
 export default function App() {
+  const [activeSection, setActiveSection] = useState("practices")
+
+  useEffect(() => {
+    const visibleSections = ["practices", "cases", "team", "contacts"]
+
+    const handleScroll = () => {
+      let current = "practices"
+
+      for (const id of visibleSections) {
+        const element = document.getElementById(id)
+        if (!element) continue
+
+        const rect = element.getBoundingClientRect()
+        if (rect.top <= 140) {
+          current = id
+        }
+      }
+
+      setActiveSection(current)
+    }
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll)
+
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   return (
     <div style={styles.page}>
       <header style={styles.header}>
         <div style={styles.brand}>Ayada Legal</div>
 
         <nav style={styles.nav}>
-          {menuItems.map((item) => (
-            <a key={item.id} href={`#${item.id}`} style={styles.navLink}>
-              {item.label}
-            </a>
-          ))}
+          {menuItems.map((item) => {
+            const isActive = activeSection === item.id
+
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                style={isActive ? styles.navLinkActive : styles.navLink}
+              >
+                {item.label}
+              </a>
+            )
+          })}
         </nav>
       </header>
 
