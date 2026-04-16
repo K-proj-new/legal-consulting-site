@@ -1,55 +1,18 @@
 import { useEffect, useState } from "react"
 import { news } from "./data/news"
 import { cases } from "./data/cases"
+import { team } from "./data/team"
+import { practices } from "./data/practices"
 
 const BRAND_COLOR = "#5a1f2c"
 
 const menuItems = [
-  { label: "Практики", id: "practices" },
   { label: "О компании", id: "about" },
-  { label: "Команда", id: "team" },
+  { label: "Практики", id: "practices" },
   { label: "Кейсы", id: "cases" },
+  { label: "Команда", id: "team" },
   { label: "Новости", id: "news" },
   { label: "Контакты", id: "contacts" },
-]
-
-const practices = [
-  {
-    title: "Корпоративное право",
-    description:
-      "Мы сопровождаем компании на всех этапах развития: от текущей операционной деятельности до сложных корпоративных изменений. Помогаем выстроить юридическую структуру, минимизировать риски и обеспечить устойчивость бизнеса. Работаем с договорами, корпоративными документами и внутренними процедурами, участвуем в ключевых решениях компании.",
-  },
-  {
-    title: "Налоговое и бухгалтерское сопровождение",
-    description:
-      "Обеспечиваем прозрачность финансовых процессов и контроль налоговой нагрузки. Помогаем выстроить эффективную систему учета, снизить риски и избежать претензий со стороны контролирующих органов. Сопровождаем отчетность, налоговое планирование и взаимодействие с государственными органами.",
-  },
-  {
-    title: "Регистрация и структурирование бизнеса",
-    description:
-      "Помогаем создать бизнес с правильной юридической и финансовой моделью с самого начала. Подбираем оптимальную форму, структуру владения и операционную схему. Сопровождаем регистрацию компаний и выстраиваем процессы для дальнейшего устойчивого развития.",
-  },
-]
-
-const team = [
-  {
-    name: "Имя Фамилия",
-    role: "Управляющий партнёр",
-    description:
-      "Корпоративное право, сопровождение сделок, юридическая стратегия бизнеса.",
-  },
-  {
-    name: "Имя Фамилия",
-    role: "Партнёр по налогам и финансам",
-    description:
-      "Налоговое структурирование, бухгалтерское сопровождение, финансовые риски.",
-  },
-  {
-    name: "Имя Фамилия",
-    role: "Старший юрист",
-    description:
-      "Договорная работа, корпоративные документы, сопровождение текущей деятельности компаний.",
-  },
 ]
 
 const styles = {
@@ -284,6 +247,13 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const addHover = (e) => Object.assign(e.currentTarget.style, styles.cardHover)
+  const removeHover = (e) =>
+    Object.assign(e.currentTarget.style, {
+      transform: "none",
+      boxShadow: "0 10px 20px rgba(0,0,0,0.04)",
+    })
+
   return (
     <div style={styles.page}>
       <header style={styles.header}>
@@ -318,7 +288,12 @@ export default function App() {
               бухгалтерия и ключевые сделки.
             </p>
 
-            <a href="#contacts" style={{ ...styles.heroButton, display: "inline-block", textDecoration: "none" }}>Получить консультацию</a>
+            <a
+              href="#contacts"
+              style={{ ...styles.heroButton, display: "inline-block", textDecoration: "none" }}
+            >
+              Получить консультацию
+            </a>
           </div>
         </section>
 
@@ -352,11 +327,16 @@ export default function App() {
                 <div
                   key={practice.title}
                   style={styles.practiceCard}
-                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
-                  onMouseLeave={(e) => Object.assign(e.currentTarget.style, { transform: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.04)" })}
+                  onMouseEnter={addHover}
+                  onMouseLeave={removeHover}
                 >
                   <h3 style={{ marginTop: 0 }}>{practice.title}</h3>
-                  <p style={{ margin: 0, color: "#444" }}>{practice.description}</p>
+                  <p style={{ margin: "6px 0 10px", color: "#111", fontWeight: 600 }}>
+                    {practice.subtitle}
+                  </p>
+                  <p style={{ margin: 0, color: "#444" }}>
+                    {practice.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -368,15 +348,15 @@ export default function App() {
             <h2 style={styles.sectionTitle}>Кейсы</h2>
 
             <div style={styles.casesGrid}>
-              {cases.map((c) => (
+              {cases.map((item) => (
                 <div
-                  key={c.title}
+                  key={item.title}
                   style={styles.caseCard}
-                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
-                  onMouseLeave={(e) => Object.assign(e.currentTarget.style, { transform: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.04)" })}
+                  onMouseEnter={addHover}
+                  onMouseLeave={removeHover}
                 >
-                  <h3 style={{ marginTop: 0 }}>{c.title}</h3>
-                  <p style={{ margin: 0, color: "#444" }}>{c.description}</p>
+                  <h3 style={{ marginTop: 0 }}>{item.title}</h3>
+                  <p style={{ margin: 0, color: "#444" }}>{item.description}</p>
                 </div>
               ))}
             </div>
@@ -388,16 +368,16 @@ export default function App() {
             <h2 style={styles.sectionTitle}>Команда</h2>
 
             <div style={styles.teamGrid}>
-              {team.map((m, i) => (
+              {team.map((member, index) => (
                 <div
-                  key={i}
+                  key={`${member.name}-${index}`}
                   style={styles.teamCard}
-                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
-                  onMouseLeave={(e) => Object.assign(e.currentTarget.style, { transform: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.04)" })}
+                  onMouseEnter={addHover}
+                  onMouseLeave={removeHover}
                 >
-                  <h3 style={{ marginTop: 0 }}>{m.name}</h3>
-                  <p style={{ color: BRAND_COLOR, marginTop: 4 }}>{m.role}</p>
-                  <p style={{ margin: 0, color: "#444" }}>{m.description}</p>
+                  <h3 style={{ marginTop: 0 }}>{member.name}</h3>
+                  <p style={{ color: BRAND_COLOR, marginTop: 4 }}>{member.role}</p>
+                  <p style={{ margin: 0, color: "#444" }}>{member.description}</p>
                 </div>
               ))}
             </div>
@@ -413,8 +393,8 @@ export default function App() {
                 <div
                   key={item.title}
                   style={styles.newsCard}
-                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
-                  onMouseLeave={(e) => Object.assign(e.currentTarget.style, { transform: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.04)" })}
+                  onMouseEnter={addHover}
+                  onMouseLeave={removeHover}
                 >
                   <h3 style={{ marginTop: 0 }}>{item.title}</h3>
                   <p style={{ margin: 0, color: "#444" }}>{item.description}</p>
@@ -439,12 +419,14 @@ export default function App() {
         </section>
       </main>
 
-      <footer style={{
-        padding: "40px",
-        background: "#0f0d12",
-        color: "#aaa",
-        fontSize: "14px"
-      }}>
+      <footer
+        style={{
+          padding: "40px",
+          background: "#0f0d12",
+          color: "#aaa",
+          fontSize: "14px",
+        }}
+      >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div style={{ marginBottom: "12px", color: "#fff", fontWeight: 700 }}>
             Ayada Legal
@@ -459,7 +441,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-
     </div>
   )
 }
