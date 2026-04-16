@@ -1,10 +1,12 @@
+const BRAND_COLOR = "#5a1f2c"
+
 const menuItems = [
-  "Практики",
-  "О компании",
-  "Команда",
-  "Кейсы",
-  "Новости",
-  "Контакты",
+  { label: "Практики", id: "practices" },
+  { label: "О компании", id: "about" },
+  { label: "Команда", id: "team" },
+  { label: "Кейсы", id: "cases" },
+  { label: "Новости", id: "news" },
+  { label: "Контакты", id: "contacts" },
 ]
 
 const practices = [
@@ -79,6 +81,7 @@ const styles = {
   brand: {
     fontSize: "20px",
     fontWeight: 700,
+    color: BRAND_COLOR,
   },
   nav: {
     display: "flex",
@@ -115,7 +118,7 @@ const styles = {
   },
   heroButton: {
     padding: "14px 22px",
-    background: "#111",
+    background: BRAND_COLOR,
     color: "#fff",
     border: "none",
     fontSize: "15px",
@@ -136,11 +139,8 @@ const styles = {
   },
   sectionTitle: {
     fontSize: "48px",
-    lineHeight: 1.05,
-    marginTop: 0,
     marginBottom: "40px",
     fontWeight: 700,
-    letterSpacing: "-0.8px",
   },
   practicesGrid: {
     display: "grid",
@@ -149,83 +149,50 @@ const styles = {
   },
   practiceCard: {
     paddingTop: "24px",
-    borderTop: "1px solid #111",
-  },
-  cardTitle: {
-    fontSize: "28px",
-    lineHeight: 1.2,
-    marginTop: 0,
-    marginBottom: "16px",
-    fontWeight: 700,
-  },
-  cardText: {
-    fontSize: "17px",
-    lineHeight: 1.6,
-    color: "#444",
-    margin: 0,
+    borderTop: `2px solid ${BRAND_COLOR}`,
   },
   casesGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
     gap: "32px",
   },
-  caseCard: {
-    paddingTop: "20px",
-    borderTop: "1px solid #111",
-  },
   teamGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
     gap: "32px",
   },
-  teamCard: {
-    borderTop: "1px solid #111",
-    paddingTop: "20px",
-  },
-  teamName: {
-    fontSize: "26px",
-    lineHeight: 1.2,
-    marginTop: 0,
-    marginBottom: "8px",
-    fontWeight: 700,
-  },
-  teamRole: {
-    fontSize: "15px",
-    color: "#666",
-    marginTop: 0,
-    marginBottom: "16px",
-  },
   ctaSection: {
     padding: "96px 40px",
-    background: "#111",
+    background: BRAND_COLOR,
     color: "#fff",
   },
   ctaWrap: {
-    maxWidth: "800px",
+    maxWidth: "900px",
     margin: "0 auto",
     textAlign: "center",
   },
   ctaTitle: {
-    fontSize: "48px",
-    lineHeight: 1.05,
-    marginTop: 0,
-    marginBottom: "24px",
+    color: "#fff",
+    fontSize: "56px",
     fontWeight: 700,
-    letterSpacing: "-0.8px",
+    lineHeight: 1.05,
+    margin: 0,
+    marginBottom: "20px",
   },
   ctaText: {
     fontSize: "20px",
     lineHeight: 1.6,
-    color: "#d1d1d1",
-    marginTop: 0,
-    marginBottom: "32px",
+    color: "#f1dfe4",
+    maxWidth: "700px",
+    margin: "0 auto 32px",
   },
   ctaButton: {
-    padding: "14px 24px",
+    padding: "14px 28px",
     background: "#fff",
-    color: "#111",
+    color: BRAND_COLOR,
     border: "none",
     fontSize: "15px",
+    fontWeight: 700,
     cursor: "pointer",
   },
 }
@@ -234,12 +201,12 @@ export default function App() {
   return (
     <div style={styles.page}>
       <header style={styles.header}>
-        <div style={styles.brand}>Legal Consulting</div>
+        <div style={styles.brand}>Ayada Legal</div>
 
         <nav style={styles.nav}>
           {menuItems.map((item) => (
-            <a key={item} href="#" style={styles.navLink}>
-              {item}
+            <a key={item.id} href={`#${item.id}`} style={styles.navLink}>
+              {item.label}
             </a>
           ))}
         </nav>
@@ -262,53 +229,53 @@ export default function App() {
           </div>
         </section>
 
-        <section style={styles.section}>
+        <section id="practices" style={styles.section}>
           <div style={styles.container}>
             <h2 style={styles.sectionTitle}>Практики</h2>
 
             <div style={styles.practicesGrid}>
               {practices.map((practice) => (
-                <article key={practice.title} style={styles.practiceCard}>
-                  <h3 style={styles.cardTitle}>{practice.title}</h3>
-                  <p style={styles.cardText}>{practice.description}</p>
-                </article>
+                <div key={practice.title} style={styles.practiceCard}>
+                  <h3>{practice.title}</h3>
+                  <p>{practice.description}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section style={styles.sectionGray}>
+        <section id="cases" style={styles.sectionGray}>
           <div style={styles.container}>
             <h2 style={styles.sectionTitle}>Кейсы</h2>
 
             <div style={styles.casesGrid}>
-              {cases.map((item) => (
-                <article key={item.title} style={styles.caseCard}>
-                  <h3 style={styles.cardTitle}>{item.title}</h3>
-                  <p style={styles.cardText}>{item.description}</p>
-                </article>
+              {cases.map((c) => (
+                <div key={c.title}>
+                  <h3>{c.title}</h3>
+                  <p>{c.description}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section style={styles.section}>
+        <section id="team" style={styles.section}>
           <div style={styles.container}>
             <h2 style={styles.sectionTitle}>Команда</h2>
 
             <div style={styles.teamGrid}>
-              {team.map((member, index) => (
-                <article key={`${member.name}-${index}`} style={styles.teamCard}>
-                  <h3 style={styles.teamName}>{member.name}</h3>
-                  <p style={styles.teamRole}>{member.role}</p>
-                  <p style={styles.cardText}>{member.description}</p>
-                </article>
+              {team.map((m, i) => (
+                <div key={i}>
+                  <h3>{m.name}</h3>
+                  <p>{m.role}</p>
+                  <p>{m.description}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section style={styles.ctaSection}>
+        <section id="contacts" style={styles.ctaSection}>
           <div style={styles.ctaWrap}>
             <h2 style={styles.ctaTitle}>Обсудим вашу задачу</h2>
             <p style={styles.ctaText}>
