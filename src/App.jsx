@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { news } from "./data/news"
+import { cases } from "./data/cases"
 
 const BRAND_COLOR = "#5a1f2c"
 
@@ -29,24 +31,6 @@ const practices = [
   },
 ]
 
-const cases = [
-  {
-    title: "Реструктуризация корпоративной модели",
-    description:
-      "Сопровождали изменение структуры бизнеса для повышения управляемости, снижения юридических рисков и подготовки компании к дальнейшему развитию.",
-  },
-  {
-    title: "Налоговое сопровождение и снижение рисков",
-    description:
-      "Провели анализ финансовой и налоговой модели компании, предложили практические решения для снижения нагрузки и повышения прозрачности процессов.",
-  },
-  {
-    title: "Сопровождение сделки и защита интересов собственника",
-    description:
-      "Подготовили юридическую позицию, структурировали документы и сопровождали ключевые этапы сделки с фокусом на безопасность и контроль рисков.",
-  },
-]
-
 const team = [
   {
     name: "Имя Фамилия",
@@ -65,24 +49,6 @@ const team = [
     role: "Старший юрист",
     description:
       "Договорная работа, корпоративные документы, сопровождение текущей деятельности компаний.",
-  },
-]
-
-const news = [
-  {
-    title: "Аналитика по корпоративному праву и налогам",
-    description:
-      "Публикуем обзоры изменений законодательства, судебной практики и ключевых тенденций, которые влияют на бизнес и принятие решений.",
-  },
-  {
-    title: "Практические комментарии для собственников и компаний",
-    description:
-      "Объясняем юридические и финансовые вопросы прикладным языком, с фокусом на риски, последствия и практические решения.",
-  },
-  {
-    title: "Обзоры ключевых изменений для бизнеса",
-    description:
-      "Отслеживаем значимые изменения в регулировании и даём краткие ориентиры для компаний, которым важно быстро адаптироваться к новой правовой среде.",
   },
 ]
 
@@ -131,32 +97,35 @@ const styles = {
     borderBottom: "1px solid #e5e5e5",
   },
   heroWrap: {
-    maxWidth: "980px",
+    maxWidth: "820px",
     margin: "0 auto",
     textAlign: "center",
   },
   heroTitle: {
-    fontSize: "72px",
-    lineHeight: 1.02,
+    fontSize: "76px",
+    lineHeight: 1.0,
     margin: 0,
-    marginBottom: "24px",
+    marginBottom: "28px",
     fontWeight: 700,
-    letterSpacing: "-1.5px",
+    letterSpacing: "-1.8px",
   },
   heroText: {
-    fontSize: "22px",
-    lineHeight: 1.5,
+    fontSize: "24px",
+    lineHeight: 1.55,
     color: "#444",
-    maxWidth: "760px",
-    margin: "0 auto 32px",
+    maxWidth: "700px",
+    margin: "0 auto 40px",
   },
   heroButton: {
-    padding: "14px 22px",
+    padding: "16px 28px",
     background: BRAND_COLOR,
     color: "#fff",
     border: "none",
-    fontSize: "15px",
+    borderRadius: "10px",
+    fontSize: "16px",
+    fontWeight: 700,
     cursor: "pointer",
+    boxShadow: "0 12px 24px rgba(90, 31, 44, 0.18)",
   },
   section: {
     padding: "88px 40px",
@@ -201,8 +170,40 @@ const styles = {
     gap: "32px",
   },
   practiceCard: {
-    paddingTop: "24px",
-    borderTop: `2px solid ${BRAND_COLOR}`,
+    background: "#fff",
+    border: "1px solid #e9e7ea",
+    borderRadius: "12px",
+    padding: "20px 22px",
+    boxShadow: "0 10px 20px rgba(0,0,0,0.04)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+  },
+  caseCard: {
+    background: "#fff",
+    border: "1px solid #e9e7ea",
+    borderRadius: "12px",
+    padding: "20px 22px",
+    boxShadow: "0 10px 20px rgba(0,0,0,0.04)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+  },
+  teamCard: {
+    background: "#fff",
+    border: "1px solid #e9e7ea",
+    borderRadius: "12px",
+    padding: "20px 22px",
+    boxShadow: "0 10px 20px rgba(0,0,0,0.04)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+  },
+  newsCard: {
+    background: "#fff",
+    border: "1px solid #e9e7ea",
+    borderRadius: "12px",
+    padding: "20px 22px",
+    boxShadow: "0 10px 20px rgba(0,0,0,0.04)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+  },
+  cardHover: {
+    transform: "translateY(-4px)",
+    boxShadow: "0 16px 30px rgba(0,0,0,0.08)",
   },
   casesGrid: {
     display: "grid",
@@ -317,7 +318,7 @@ export default function App() {
               бухгалтерия и ключевые сделки.
             </p>
 
-            <button style={styles.heroButton}>Получить консультацию</button>
+            <a href="#contacts" style={{ ...styles.heroButton, display: "inline-block", textDecoration: "none" }}>Получить консультацию</a>
           </div>
         </section>
 
@@ -348,9 +349,14 @@ export default function App() {
 
             <div style={styles.practicesGrid}>
               {practices.map((practice) => (
-                <div key={practice.title} style={styles.practiceCard}>
-                  <h3>{practice.title}</h3>
-                  <p>{practice.description}</p>
+                <div
+                  key={practice.title}
+                  style={styles.practiceCard}
+                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
+                  onMouseLeave={(e) => Object.assign(e.currentTarget.style, { transform: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.04)" })}
+                >
+                  <h3 style={{ marginTop: 0 }}>{practice.title}</h3>
+                  <p style={{ margin: 0, color: "#444" }}>{practice.description}</p>
                 </div>
               ))}
             </div>
@@ -363,9 +369,14 @@ export default function App() {
 
             <div style={styles.casesGrid}>
               {cases.map((c) => (
-                <div key={c.title}>
-                  <h3>{c.title}</h3>
-                  <p>{c.description}</p>
+                <div
+                  key={c.title}
+                  style={styles.caseCard}
+                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
+                  onMouseLeave={(e) => Object.assign(e.currentTarget.style, { transform: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.04)" })}
+                >
+                  <h3 style={{ marginTop: 0 }}>{c.title}</h3>
+                  <p style={{ margin: 0, color: "#444" }}>{c.description}</p>
                 </div>
               ))}
             </div>
@@ -378,10 +389,15 @@ export default function App() {
 
             <div style={styles.teamGrid}>
               {team.map((m, i) => (
-                <div key={i}>
-                  <h3>{m.name}</h3>
-                  <p>{m.role}</p>
-                  <p>{m.description}</p>
+                <div
+                  key={i}
+                  style={styles.teamCard}
+                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
+                  onMouseLeave={(e) => Object.assign(e.currentTarget.style, { transform: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.04)" })}
+                >
+                  <h3 style={{ marginTop: 0 }}>{m.name}</h3>
+                  <p style={{ color: BRAND_COLOR, marginTop: 4 }}>{m.role}</p>
+                  <p style={{ margin: 0, color: "#444" }}>{m.description}</p>
                 </div>
               ))}
             </div>
@@ -394,9 +410,14 @@ export default function App() {
 
             <div style={styles.newsGrid}>
               {news.map((item) => (
-                <div key={item.title}>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                <div
+                  key={item.title}
+                  style={styles.newsCard}
+                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
+                  onMouseLeave={(e) => Object.assign(e.currentTarget.style, { transform: "none", boxShadow: "0 10px 20px rgba(0,0,0,0.04)" })}
+                >
+                  <h3 style={{ marginTop: 0 }}>{item.title}</h3>
+                  <p style={{ margin: 0, color: "#444" }}>{item.description}</p>
                 </div>
               ))}
             </div>
@@ -409,10 +430,36 @@ export default function App() {
             <p style={styles.ctaText}>
               Свяжитесь с нами, и мы предложим оптимальное решение для вашего бизнеса.
             </p>
-            <button style={styles.ctaButton}>Связаться с нами</button>
+            <div style={{ fontSize: "18px", lineHeight: 1.8, color: "#fff" }}>
+              <div>Email: your@email.com</div>
+              <div>Телефон: +7 (___) ___-__-__</div>
+              <div>Telegram: @yourtelegram</div>
+            </div>
           </div>
         </section>
       </main>
+
+      <footer style={{
+        padding: "40px",
+        background: "#0f0d12",
+        color: "#aaa",
+        fontSize: "14px"
+      }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <div style={{ marginBottom: "12px", color: "#fff", fontWeight: 700 }}>
+            Ayada Legal
+          </div>
+
+          <div style={{ marginBottom: "8px" }}>
+            Юридическое и финансовое сопровождение бизнеса
+          </div>
+
+          <div style={{ opacity: 0.6 }}>
+            © 2026 ayada.ru — Все права защищены
+          </div>
+        </div>
+      </footer>
+
     </div>
   )
 }
