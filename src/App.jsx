@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import aboutImage from "./assets/about-building.jpg"
 import { news } from "./data/news"
 import { cases } from "./data/cases"
 import { team } from "./data/team"
@@ -60,17 +61,17 @@ const styles = {
     borderBottom: "1px solid #e5e5e5",
   },
   heroWrap: {
-    maxWidth: "820px",
+    maxWidth: "1100px",
     margin: "0 auto",
     textAlign: "center",
   },
   heroTitle: {
-    fontSize: "76px",
-    lineHeight: 1.0,
+    fontSize: "60px",
+    lineHeight: 1.08,
     margin: 0,
     marginBottom: "28px",
     fontWeight: 700,
-    letterSpacing: "-1.8px",
+    letterSpacing: "-1.2px",
   },
   heroText: {
     fontSize: "24px",
@@ -280,7 +281,7 @@ export default function App() {
         <section style={styles.heroSection}>
           <div style={styles.heroWrap}>
             <h1 style={styles.heroTitle}>
-              Внешний юридический и финансовый департамент для бизнеса
+              Внешний юридический и финансовый департамент
             </h1>
 
             <p style={styles.heroText}>
@@ -298,23 +299,46 @@ export default function App() {
         </section>
 
         <section id="about" style={styles.section}>
-          <div style={styles.container}>
-            <h2 style={styles.sectionTitle}>О компании</h2>
+          <div
+            style={{
+              ...styles.container,
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: "60px",
+              alignItems: "center",
+            }}
+          >
+            <div>
+              <h2 style={styles.sectionTitle}>О компании</h2>
 
-            <p style={styles.introLead}>
-              Ayada — внешний юридический и финансовый департамент для бизнеса.
-            </p>
+              <p style={styles.introLead}>
+                Ayada — внешний юридический и финансовый департамент для бизнеса.
+              </p>
 
-            <p style={styles.introText}>
-              Мы обеспечиваем комплексное сопровождение компаний: корпоративное право,
-              налоговое планирование, бухгалтерия и сопровождение ключевых сделок.
-            </p>
+              <p style={styles.introText}>
+                Компания работает на рынке с 2011 года и объединяет опытных юристов и финансистов,
+                сопровождающих бизнес, сделки и корпоративные процессы.
+              </p>
 
-            <p style={styles.introTextLast}>
-              Ayada — юридический бутик, ориентированный на бизнес-задачи собственников,
-              компаний и инвесторов. Мы помогаем принимать стратегические решения и
-              снижать юридические и финансовые риски.
-            </p>
+              <p style={styles.introText}>
+                Мы обеспечиваем комплексное сопровождение компаний: корпоративное право,
+                налоговое планирование, бухгалтерия и сопровождение ключевых сделок.
+              </p>
+
+              <p style={styles.introTextLast}>
+                Ayada — юридический бутик, ориентированный на бизнес-задачи собственников,
+                компаний и инвесторов. Мы помогаем принимать стратегические решения и
+                снижать юридические и финансовые риски.
+              </p>
+            </div>
+
+            <div>
+              <img
+                src={aboutImage}
+                alt="Современная офисная архитектура"
+                style={{ width: "100%", borderRadius: "16px", display: "block" }}
+              />
+            </div>
           </div>
         </section>
 
@@ -367,20 +391,18 @@ export default function App() {
           <div style={styles.container}>
             <h2 style={styles.sectionTitle}>Команда</h2>
 
-            <div style={styles.teamGrid}>
-              {team.map((member, index) => (
-                <div
-                  key={`${member.name}-${index}`}
-                  style={styles.teamCard}
-                  onMouseEnter={addHover}
-                  onMouseLeave={removeHover}
-                >
-                  <h3 style={{ marginTop: 0 }}>{member.name}</h3>
-                  <p style={{ color: BRAND_COLOR, marginTop: 4 }}>{member.role}</p>
-                  <p style={{ margin: 0, color: "#444" }}>{member.description}</p>
-                </div>
-              ))}
-            </div>
+            <p style={styles.introLead}>
+              Мы — команда опытных юристов и финансовых специалистов с опытом сопровождения бизнеса, сделок и корпоративных процессов.
+            </p>
+
+            <p style={styles.introText}>
+              Объединяем экспертизу в корпоративном праве, налогах и финансовом управлении, чтобы решать задачи компаний комплексно и на уровне принятия решений.
+            </p>
+
+            <p style={styles.introTextLast}>
+              Работаем как внешний юридический и финансовый департамент, глубоко погружаясь в бизнес клиента и его цели.
+            </p>
+
           </div>
         </section>
 
